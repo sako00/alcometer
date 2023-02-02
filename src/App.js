@@ -30,6 +30,7 @@ function App() {
   return (
     <div>
       <h3>Alcometri</h3>
+      <label>Weight</label>
       <input
         type="number"
         placeholder="Weight (in kg)"
@@ -37,6 +38,7 @@ function App() {
         onChange={(e) => setWeight(e.target.value)}
       />
       <div>
+        <label>Bottles</label>
       <select value={bottles} onChange={(e) => setBottles(e.target.value)}>
         <option value="0">0</option>
         <option value="1">1</option>
@@ -47,6 +49,7 @@ function App() {
       </select>
       </div>
       <div>
+        <label>Time</label>
       <select value={time} onChange={(e) => setTime(e.target.value)}>
         <option value="0">0</option>
         <option value="1">1</option>
