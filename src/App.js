@@ -11,21 +11,21 @@ function App() {
 
   function handleSubmit(e){
     e.preventDefault();
-    const litres = bottles * 0.33;
-    const grams = litres * 8 * 4.5;
-    const burning = weight / 10;
-    const gramsLeft = grams - (burning * time);
+    let litres = bottles * 0.33;
+    let grams = litres * 8 * 4.5;
+    let burning = weight / 10;
+    let gramsLeft = grams - (burning * time);
     let alcosum = 0;
     if (gender === 'male'){
       alcosum = gramsLeft / (weight * 0.7);
     }
     else if(gender === 'female'){
-      alcosum = gramsLeft / (weight* 0.6);
+      alcosum = gramsLeft / (weight * 0.6);
     }
     if(alcosum<0){
       alcosum=0;
     }
-    setResult(alcosum.toFixed(2));
+    setResult(alcosum);
   }
 
   return (
@@ -38,7 +38,7 @@ function App() {
     </div>
     <div>
       <label>Bottles</label>
-      <input name="bottless" type="number" step="1" value={bottles} onChange={e => setBottles(e.target.value)}></input>
+      <input name="bottles" type="number" step="1" value={bottles} onChange={e => setBottles(e.target.value)}></input>
       
     </div>
     <div>
