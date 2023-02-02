@@ -3,40 +3,47 @@ import './App.css';
 
 function App() {
 
-  const [weight, setWeight] = useState(90);
-  const [intensity, setIntensity] = useState(1.3);
+  const [weight, setWeight] = useState(0);
   const [gender, setGender] = useState('male');
+  const [bottles, setBottles] = useState(0);
+  const [time, setTime] = useState(0);
   const [result, setResult] = useState(0);
 
   function handleSubmit(e){
     e.preventDefault();
-    let calories = 0;
+    const litres = bottles * 0.33;
+    const grams = litres * 8 * 4.5;
+    const burning = weight / 10;
+    const gramsLeft = grams - (burning * time);
+    let alcosum = 0;
     if (gender === 'male'){
-      calories = (879 + 10.2 * weight)* intensity;
+      alcosum = gramsLeft / (weight * 0.7);
     }
-    else{
-      calories = (795 + 7.18 * weight)*intensity;
+    else if(gender === 'female'){
+      alcosum = gramsLeft / (weight* 0.6);
     }
-    setResult(calories);
+    if(alcosum<0){
+      alcosum=0;
+    }
+    setResult(alcosum.toFixed(2));
   }
 
   return (
     <>
-   <h3>Calories</h3>
+   <h3>Alcometer</h3>
    <form onSubmit={handleSubmit}>
     <div>
       <label>Weight</label>
       <input name="weight" type="number" step="1" value={weight} onChange={e => setWeight(e.target.value)}></input>
     </div>
     <div>
-      <label>Intensity</label>
-      <select name="intensity" value={intensity} onChange={e => setIntensity(e.target.value)}>
-        <option value="1.3">Light</option>
-        <option value="1.5">Usual</option>
-        <option value="1.7">Moderate</option>
-        <option value="2">Hard</option>
-        <option value="2.2">Very hard</option>
-      </select>
+      <label>Bottles</label>
+      <input name="bottless" type="number" step="1" value={bottles} onChange={e => setBottles(e.target.value)}></input>
+      
+    </div>
+    <div>
+    <label>Time</label>
+    <input name="time" type="number" step="1" value={time} onChange={e => setTime(e.target.value)}></input>
     </div>
     <div>
       <label>Gender</label>
@@ -46,7 +53,7 @@ function App() {
     <div>
       <output>{result.toFixed(0)}</output>
     </div>
-    <button>Calculate</button>
+    <button onClick={handleSubmit}>Calculate</button>
    </form>
    </>
   );
