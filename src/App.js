@@ -1,64 +1,72 @@
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 import './App.css';
 
-function App() {
 
+
+function App() {
   const [weight, setWeight] = useState(0);
   const [gender, setGender] = useState('male');
   const [bottles, setBottles] = useState(0);
   const [time, setTime] = useState(0);
   const [result, setResult] = useState(0);
 
-  function handleSubmit(e){
-    e.preventDefault();
-    let litres = bottles * 0.33;
-    let grams = litres * 8 * 4.5;
-    let burning = weight / 10;
-    let gramsLeft = grams - (burning * time);
-    let alcosum = 0;
-    if (gender === 'male'){
-      alcosum = gramsLeft / (weight * 0.7);
+  function calculate(){
+    const litres = bottles * 0.33;
+    const grams = litres * 8 * 4.5;
+    const burning = weight / 10;
+    const gramsLeft = grams - (burning * time);
+    let result = 0;
+    if (gender === 'male') {
+      result = gramsLeft / (weight * 0.7);
+    } else if (gender === 'female') {
+      result = gramsLeft / (weight * 0.6);
     }
-    else if(gender === 'female'){
-      alcosum = gramsLeft / (weight * 0.6);
+    if (result < 0) {
+      result = 0;
     }
-    if(alcosum<0){
-      alcosum=0;
-    }
-    setResult(alcosum);
-  }
+    setResult(result.toFixed(1));
+  };
 
   return (
-    <>
-   <h3>Alcometer</h3>
-   <form onSubmit={handleSubmit}>
     <div>
-      <label>Weight</label>
-      <input name="weight" type="number" step="1" value={weight} onChange={e => setWeight(e.target.value)}></input>
-    </div>
-    <div>
-      <label>Bottles</label>
-      <input name="bottles" type="number" step="1" value={bottles} onChange={e => setBottles(e.target.value)}></input>
+      <h3>Alcometri</h3>
+      <input
+        type="number"
+        placeholder="Weight (in kg)"
+        value={weight}
+        onChange={(e) => setWeight(e.target.value)}
+      />
+      <div>
+      <select value={bottles} onChange={(e) => setBottles(e.target.value)}>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      </div>
+      <div>
+      <select value={time} onChange={(e) => setTime(e.target.value)}>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      </div>
       
-    </div>
-    <div>
-    <label>Time</label>
-    <input name="time" type="number" step="1" value={time} onChange={e => setTime(e.target.value)}></input>
-    </div>
-    <div>
+      <div>
       <label>Gender</label>
-      <input type="radio" name="gender" value="male" defaultChecked onChange={e => setGender(e.target.value)}/><label>Male</label>
-      <input type="radio" name="gender" value="female" onChange={e => setGender(e.target.value)}/><label>Female</label>
+          <input type="radio" name="gender" value="male" defaultChecked onChange={e => setGender(e.target.value)} /><label>Male</label>
+          <input type="radio" name="gender" value="female" onChange={e => setGender(e.target.value)} /><label>Female</label>
+      </div>
+      
+      <button onClick={calculate}>Calculate</button>
+      <p>Result: {result}</p>
     </div>
-    <div>
-      <output>{result.toFixed(0)}</output>
-    </div>
-    <button onClick={handleSubmit}>Calculate</button>
-   </form>
-   </>
   );
-}
+};
 
 export default App;
-
-  
