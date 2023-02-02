@@ -1,3 +1,18 @@
 *{
   padding: 4px;
 }
+h3{
+  font-size: 1.5em;
+}
+label{
+  font-size: 1.2em;
+}
+div{
+  background-color: skyblue;
+}
+button{
+ padding: 10px;
+}
+select,input,button{
+  background-color: rgb(235, 216, 192);
+}
